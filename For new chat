@@ -1,0 +1,92 @@
+Raspberry Pi Smart Door Security Project – Current Progress
+
+Main project folder:
+/home/pi/object_detection
+
+Virtual environment:
+objDetection-env
+
+Environment start:
+cd /home/pi/object_detection
+source objDetection-env/bin/activate
+
+Environment stop:
+deactivate
+
+Current project structure:
+
+/home/pi/object_detection/
+├── objDetection-env/
+├── models/
+│   ├── yunet.onnx
+│   └── sface.onnx
+├── known_faces/
+│   └── Nurul/
+├── unknown_faces/
+├── enroll_faces.py
+├── yolo26n.pt
+├── runs/
+└── bus.jpg
+
+System:
+Raspberry Pi Camera + OpenCV 5.0.0
+
+Verified working:
+- Picamera2 OK
+- Raspberry Pi Camera OK
+- OpenCV 5.0.0
+- cv2.FaceDetectorYN = True
+- cv2.FaceRecognizerSF = True
+- Ultralytics installed
+- YOLO26n installed
+- YuNet face detector available
+- SFace face recognizer available
+
+Project Goal:
+1. Authorized person's face enroll করা
+2. Camera-তে known face এলে identify করা
+3. Known face 3 consecutive frames confirm হলে door unlock
+4. কিছু সময় পরে door automatically lock
+5. Unknown face হলে door বন্ধ থাকবে
+6. Unknown person's ছবি save হবে
+7. Owner-এর কাছে notification + ছবিটি যাবে
+8. Unknown person বেশিক্ষণ থাকলে/repeated attempts করলে buzzer বাজবে
+9. পরে YOLO person detection ব্যবহার করে suspicious/loitering activity detect করা হবে
+
+Important:
+Face recognition-এর জন্য YOLO train করছি না।
+YuNet = face detect
+SFace = face embedding/recognition
+YOLO = পরে suspicious/person activity detection
+
+Enrollment:
+python enroll_faces.py Nurul
+
+Enrollment-এর সময় Nurul-এর প্রায় 15টি face sample capture করে:
+known_faces/Nurul/
+
+এবং embeddings.npy save করবে।
+
+বর্তমানে শুধু Nurul দিয়ে test করা হবে।
+Rafi/friend পরে add করা হবে।
+
+NEXT STEP:
+Nurul enrollment complete করার পরে recognize_face.py তৈরি করতে হবে।
+
+recognize_face.py requirements:
+- Camera continuously run করবে
+- Face detect করবে
+- known_faces database load করবে
+- Nurul হলে:
+  "Nurul - AUTHORIZED"
+- অন্য মানুষ হলে:
+  "UNKNOWN"
+- similarity score screen/terminal-এ দেখাবে
+- threshold conservative হবে যাতে ভুল করে অন্য মানুষকে Nurul না বলে
+- এখনই relay/buzzer/notification add করা হবে না
+- recognition reliable হওয়ার পর hardware features add করা হবে
+
+After recognition works:
+Known → door relay/servo
+Unknown → photo + notification
+Repeated/loitering unknown → buzzer

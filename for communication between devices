@@ -1,0 +1,21 @@
+cd ~/object_detection
+source objDetection-env/bin/activate
+pip install flask pyserial gpiozero
+ESP32 Data আগে Test:
+cat /dev/serial0
+খন অবশ্যই এরকম আসতে হবে:
+{"gas_adc":324,"gas_ppm":791,"gas_detected":false,"flame_detected":false,"state":"SAFE","pump":"OFF","buzzer":"OFF"}
+{"gas_adc":327,"gas_ppm":798,"gas_detected":false,"flame_detected":false,"state":"SAFE","pump":"OFF","buzzer":"OFF"}
+Jason ele:
+CTRL+C  off korar jonno
+
+
+
+
+Full system run:
+cd ~/object_detection
+source objDetection-env/bin/activate
+python main.py
+
+website:
+http://localhost:5000
