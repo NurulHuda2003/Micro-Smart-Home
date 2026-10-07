@@ -1,0 +1,22 @@
+cd /home/pi/object_detection
+source objDetection-env/bin/activate
+
+সফল হলে prompt হবে:
+(objDetection-env) pi@pi:~/object_detection $
+
+কাজ শেষ হলে env বন্ধ:
+deactivate
+   
+
+to train recognize faces:
+python enroll_faces.py Nurul
+  
+live recognization:
+python recognize_camera.py
+ 
+
+
+
+
+
+
